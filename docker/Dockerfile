@@ -1,9 +1,9 @@
-ARG ARCH
-ARG BASE_VERSION
-ARG OPENCV_VERSION
-ARG FFMPEG_VERSION
-ARG WHEELS_VERSION
-ARG UBUNTU_VERSION
+ARG ARCH=amd64
+ARG BASE_VERSION=1.7.0
+ARG OPENCV_VERSION=4.9.0
+ARG FFMPEG_VERSION=5.1.2
+ARG WHEELS_VERSION=1.5
+ARG UBUNTU_VERSION=20.04
 FROM roflcoopter/${ARCH}-opencv:${OPENCV_VERSION} as opencv
 FROM roflcoopter/${ARCH}-ffmpeg:${FFMPEG_VERSION} as ffmpeg
 FROM roflcoopter/${ARCH}-wheels:${WHEELS_VERSION} as wheels
@@ -30,11 +30,12 @@ RUN \
 RUN \
   cd gpac && \
   ./configure --static-bin / && \
-  make -j$(nproc)
+  make -j$(nproc) && \
+  make install
 
 
 # Build frontend
-FROM node:20.10.0 as frontend
+FROM node:20.12.2 as frontend
 
 WORKDIR /frontend
 
@@ -55,9 +56,9 @@ WORKDIR /src
 
 COPY --from=wheels /wheels /wheels
 
-ARG S6_OVERLAY_ARCH
-ARG S6_OVERLAY_VERSION
-ARG EXTRA_APT_PACKAGES
+ARG S6_OVERLAY_ARCH=amd64
+ARG S6_OVERLAY_VERSION=2.2.0.3
+ARG EXTRA_APT_PACKAGES=
 
 ENV \
   DEBIAN_FRONTEND=noninteractive \

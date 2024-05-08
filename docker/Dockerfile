@@ -35,7 +35,7 @@ RUN \
 
 
 # Build frontend
-FROM node:20.10.0 as frontend
+FROM node:20.12.2 as frontend
 
 WORKDIR /frontend
 

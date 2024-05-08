@@ -8,8 +8,8 @@ on:
   pull_request: ~
 
 env:
-  #NODE_VERSION: 16
-  NODE_VERSION: 20
+  NODE_VERSION: 16
+
 defaults:
   run:
     working-directory: ./frontend

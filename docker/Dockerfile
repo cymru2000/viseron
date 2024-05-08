@@ -30,7 +30,8 @@ RUN \
 RUN \
   cd gpac && \
   ./configure --static-bin / && \
-  make -j$(nproc)
+  make -j$(nproc) && \
+  make install
 
 
 # Build frontend
@@ -155,7 +156,7 @@ COPY docker/ffprobe_wrapper /home/abc/bin/ffprobe
 COPY docker/ffmpeg_wrapper /home/abc/bin/ffmpeg
 COPY --from=opencv /opt/opencv /usr/local/
 COPY --from=ffmpeg /usr/local /ffmpeg/
-COPY --from=gpac /gpac/bin/gcc /usr/bin
+#COPY --from=gpac /gpac/bin/gcc /usr/bin
 COPY rootfs/ /
 COPY --from=frontend /frontend/dist /src/viseron/frontend/
 COPY manager.py /src/manager.py

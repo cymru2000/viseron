@@ -478,6 +478,7 @@ jobs:
           command: |
             pre-commit run --hook-stage manual generate_docs --all-files --show-diff-on-failure
             pre-commit run --hook-stage manual check_config_json --all-files --show-diff-on-failure
+
   build-docker:
     runs-on: ubuntu-latest
     needs: [run-generated-docs, run-pytest]
@@ -511,7 +512,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@f2a1d5e99d037542a71f64918e516c093c6f3fc4
         with:
           context: .
           file: ./docker/Dockerfile
